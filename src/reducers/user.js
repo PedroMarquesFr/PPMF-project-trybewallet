@@ -12,12 +12,3 @@ export default function user(state = initialState, { type, email }) {
   }
 }
 
-// {
-//     user: {
-//       email: '',
-//     },
-//     wallet: {
-//       currencies: [],
-//       expenses: []
-//     }
-//   }
