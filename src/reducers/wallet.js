@@ -34,4 +34,5 @@ export default function reducer(state = initialState, { type, expense }) {
 //       currencies: [],
 //       expenses: []
 //     }
+
 //   }
