@@ -8,19 +8,19 @@ const requestingData = () => {
   return { type: REQUESTING_DATA };
 };
 const receivedData = (resp) => {
-  return { type: RECEIVED_DATA, resp };
+  return { type: RECEIVED_DATA, ...resp };
 };
 const failedRequest = (error)=>{
     return {type: FAILED_REQUEST, resp: error}
 }
-export default function handleAsync() {
+export default function handleAsync(expense) {
   return async (dispatch) => {
     try {
       dispatch(requestingData());
       console.log("antes")
-      const resp = await fetchAPI();
+      const exchangeRates = await fetchAPI();
       console.log("depois")
-      return dispatch(receivedData(resp));
+      return dispatch(receivedData({expense:{...expense, exchangeRates}}));
     }catch(error){
       return dispatch(failedRequest(error))  
     }
