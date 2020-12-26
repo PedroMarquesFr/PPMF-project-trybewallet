@@ -60,71 +60,66 @@ class Form extends Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <div>
-            <label htmlFor="disp">despesas</label>
-            <input
-              name="value"
-              type="number"
-              data-testid="value-input"
-              id="disp"
-              value={value}
-              onChange={this.handleChange}
-            ></input>
-          </div>
-          <div>
-            <label htmlFor="desc">Descrição</label>
-            <input
-              name="description"
-              type="text"
-              data-testid="description-input"
-              id="desc"
-              value={description}
-              onChange={this.handleChange}
-            ></input>
-          </div>
-          <div>
-            <select
-              name="currency"
-              id="curr"
-              data-testid="currency-input"
-              onChange={this.handleChange}
-              value={currency}
-            >
-              {currencies.map((curr) => (
-                <option key={curr} data-testid={curr} value={curr}>
-                  {curr}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <select
-              name="method"
-              id="pay"
-              data-testid="method-input"
-              onChange={this.handleChange}
-              value={method}
-            >
-              <option value="Dinheiro">Dinheiro</option>
-              <option value="Cartão de crédito">Cartão de crédito</option>
-              <option value="Cartão de débito">Cartão de débito</option>
-            </select>
-          </div>
-          <div>
-            <select
-              name="tag"
-              id="desp"
-              data-testid="tag-input"
-              onChange={this.handleChange}
-              value={tag}
-            >
-              <option value="Alimentação">Alimentação</option>
-              <option value="Lazer">Lazer</option>
-              <option value="Trabalho">Trabalho</option>
-              <option value="Transporte">Transporte</option>
-              <option value="Saúde">Saúde</option>
-            </select>
-          </div>
+          <label htmlFor="disp">despesas</label>
+          <input
+            name="value"
+            type="number"
+            data-testid="value-input"
+            id="disp"
+            value={value}
+            onChange={this.handleChange}
+          ></input>
+
+          <label htmlFor="desc">Descrição</label>
+          <input
+            name="description"
+            type="text"
+            data-testid="description-input"
+            id="desc"
+            value={description}
+            onChange={this.handleChange}
+          ></input>
+
+          <select
+            name="currency"
+            id="curr"
+            data-testid="currency-input"
+            onChange={this.handleChange}
+            value={currency}
+          >
+            {currencies.map((curr) => (
+              <option key={curr} data-testid={curr} value={curr}>
+                {curr}
+              </option>
+            ))}
+          </select>
+
+          <select
+            name="method"
+            id="pay"
+            data-testid="method-input"
+            onChange={this.handleChange}
+            value={method}
+          >
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
+          </select>
+
+          <select
+            name="tag"
+            id="desp"
+            data-testid="tag-input"
+            onChange={this.handleChange}
+            value={tag}
+          >
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
+          </select>
+
           <button type="submit">Adicionar despesa</button>
         </form>
       </div>
