@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Navbar } from "react-bootstrap";
 import Form from "../components/Form";
+import TableComp from "../components/Table";
 
 class Wallet extends React.Component {
   expenseCounter = (expenses) => {
@@ -25,6 +26,7 @@ class Wallet extends React.Component {
           </Navbar>
         </header>
         <Form />
+        <TableComp/>
       </div>
     );
   }
