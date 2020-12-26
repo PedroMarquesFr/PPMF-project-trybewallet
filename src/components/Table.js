@@ -1,8 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Table } from "react-bootstrap";
+import { actionDelete } from "../actions";
+import { Table, Button } from "react-bootstrap";
 
-function TableComp({ expenses }) {
+function TableComp({ expenses, actionDelete }) {
   //   expensesTable = () => {
   //     expenses.map(({}))
   //   };
@@ -45,6 +46,16 @@ function TableComp({ expenses }) {
                     {parseFloat(value * exchangeRates[currency].ask).toFixed(2)}
                   </td>
                   <td>Real</td>
+                  <td>
+                    <Button variant="warning" data-testid="edit-btn">Editar</Button>{" "}
+                    <Button
+                      variant="danger"
+                      data-testid="delete-btn"
+                      onClick={() => actionDelete(id)}
+                    >
+                      Remover
+                    </Button>
+                  </td>
                 </tr>
               );
             }
@@ -59,4 +70,6 @@ const mapStateToProps = ({ wallet: { expenses } }) => ({
   expenses,
 });
 
-export default connect(mapStateToProps)(TableComp);
+const mapDispatchToProps = { actionDelete };
+
+export default connect(mapStateToProps, mapDispatchToProps)(TableComp);
