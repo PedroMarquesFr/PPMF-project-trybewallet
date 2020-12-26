@@ -70,7 +70,7 @@ class Form extends Component {
             onChange={this.handleChange}
           ></input>
 
-          <label htmlFor="desc">Descrição</label>
+          <label htmlFor="desc"></label>
           <input
             name="description"
             type="text"
