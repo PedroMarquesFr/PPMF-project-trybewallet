@@ -2,15 +2,24 @@
 const REQUESTING_DATA = "REQUESTING_DATA";
 const RECEIVED_DATA = "RECEIVED_DATA";
 const FAILED_REQUEST = "FAILED_REQUEST";
+
 const DELETE_EXP = "DELETE_EXP";
+const EDIT_EXP = "EDIT_EXP";
+const EDIT_STATE_CHANGE = "EDIT_STATE";
+const CHANGE_ID = "CHANGE_ID";
 
 const initialState = {
   currencies: [],
   expenses: [],
   isFetching: false,
+  editor: false,
+  idToEdit: 0,
 };
 
 export default function reducer(state = initialState, { type, expense }) {
+  const { expenses } = state;
+  const newExpenses = expenses;
+
   switch (type) {
     case REQUESTING_DATA:
       return { ...state, isFetching: true };
@@ -23,16 +32,33 @@ export default function reducer(state = initialState, { type, expense }) {
     case FAILED_REQUEST:
       return { ...state, error: state.expenses, isFetching: false };
     case DELETE_EXP:
-      const {expenses}= state;
-      const newExpenses = expenses;
-      console.log(expense);
-
-      const index = expenses.findIndex(({ id }) => id === expense);
+      const index = expenses.findIndex(({ id }) => id === expense.id);
       newExpenses.splice(index, 1);
       return {
         ...state,
-        expenses:[...newExpenses],
+        expenses: [...newExpenses],
         isFetching: false,
+      };
+    case EDIT_EXP:
+      const indx = expenses.findIndex(({ id }) => id === expense.id);
+      console.log(expense.id)
+      const exchangeRates = newExpenses[indx].exchangeRates 
+      newExpenses[indx] = { ...expense, exchangeRates };
+
+      return {
+        ...state,
+        expenses: [...newExpenses],
+        isFetching: false,
+      };
+    case EDIT_STATE_CHANGE:
+      return {
+        ...state,
+        editor: !state.editor,
+      };
+    case CHANGE_ID:
+      return {
+        ...state,
+        idToEdit: expense, // nesse caso o expense não é um objeto e sim o proprio id
       };
     default:
       return state;

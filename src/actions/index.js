@@ -2,4 +2,9 @@
 
 export { default as actionUserLogin } from "./actionUserLogin";
 export { default as actionAPI } from "./actionAPI";
-export { default as actionDelete } from "./actionDeleteExpense";
+export {
+  deleteExpense as actionDelete,
+  editExpense as actionEdit,
+  editChangeState as actionChangeEditState,
+  idBeingEdited
+} from "./actionModifyExpense";

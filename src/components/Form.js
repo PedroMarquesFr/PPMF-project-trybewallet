@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import fetchAPI from "../services/fetchAPI";
-import { actionAPI } from "../actions";
+import { actionAPI, actionEdit } from "../actions";
 
 class Form extends Component {
   constructor() {
@@ -41,10 +41,13 @@ class Form extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { actionAPI } = this.props;
+    const { actionAPI, actionEdit, editingMode, editingId } = this.props;
+    console.log(editingId);
     const { currency, value, description, method, tag } = this.state;
     const id = this.counter;
-    actionAPI({ currency, value, description, method, tag, id });
+    editingMode
+      ? actionEdit({ currency, value, description, method, tag, id:editingId })
+      : actionAPI({ currency, value, description, method, tag, id });
     this.counter += 1;
   }
 
@@ -57,6 +60,8 @@ class Form extends Component {
       method,
       tag,
     } = this.state;
+    const { editingMode } = this.props;
+    console.log(editingMode)
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -120,13 +125,20 @@ class Form extends Component {
             <option value="Saúde">Saúde</option>
           </select>
 
-          <button type="submit">Adicionar despesa</button>
+          <button type="submit">
+            {editingMode ? "Editar despesa" : "Adicionar despesa"}
+          </button>
         </form>
       </div>
     );
   }
 }
 
-const mapDispatchToProps = { actionAPI };
+const mapStateToProps = (store) => ({
+  editingMode: store.wallet.editor,
+  editingId:store.wallet.idToEdit,
+});
 
-export default connect(null, mapDispatchToProps)(Form);
+const mapDispatchToProps = { actionAPI, actionEdit };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
