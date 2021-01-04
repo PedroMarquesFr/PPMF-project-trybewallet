@@ -1,7 +1,7 @@
-import React from "react";
-import { connect } from "react-redux";
-import { actionDelete, actionChangeEditState, idBeingEdited } from "../actions";
-import { Table, Button } from "react-bootstrap";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Table, Button } from 'react-bootstrap';
+import { actionDelete, actionChangeEditState, idBeingEdited } from '../actions';
 
 function TableComp({
   expenses,
@@ -38,41 +38,40 @@ function TableComp({
               method,
               tag,
               exchangeRates,
-            }) => {
-              return (
-                <tr key={id}>
-                  <td>{description}</td>
-                  <td>{tag}</td>
-                  <td>{method}</td>
-                  <td>{value}</td>
-                  <td>{exchangeRates[currency].name}</td>
-                  <td>{parseFloat(exchangeRates[currency].ask).toFixed(2)}</td>
-                  <td>
-                    {parseFloat(value * exchangeRates[currency].ask).toFixed(2)}
-                  </td>
-                  <td>Real</td>
-                  <td>
-                    <Button
-                      variant="warning"
-                      data-testid="edit-btn"
-                      onClick={() => {
-                        actionChangeEditState();
-                        idBeingEdited(id);
-                      }}
-                    >
-                      Editar
-                    </Button>{" "}
-                    <Button
-                      variant="danger"
-                      data-testid="delete-btn"
-                      onClick={() => actionDelete(id)}
-                    >
-                      Remover
-                    </Button>
-                  </td>
-                </tr>
-              );
-            }
+            }) => (
+              <tr key={ id }>
+                <td>{description}</td>
+                <td>{tag}</td>
+                <td>{method}</td>
+                <td>{value}</td>
+                <td>{exchangeRates[currency].name}</td>
+                <td>{parseFloat(exchangeRates[currency].ask).toFixed(2)}</td>
+                <td>
+                  {parseFloat(value * exchangeRates[currency].ask).toFixed(2)}
+                </td>
+                <td>Real</td>
+                <td>
+                  <Button
+                    variant="warning"
+                    data-testid="edit-btn"
+                    onClick={ () => {
+                      actionChangeEditState();
+                      idBeingEdited(id);
+                    } }
+                  >
+                    Editar
+                  </Button>
+                  {' '}
+                  <Button
+                    variant="danger"
+                    data-testid="delete-btn"
+                    onClick={ () => actionDelete(id) }
+                  >
+                    Remover
+                  </Button>
+                </td>
+              </tr>
+            ),
           )}
         </tbody>
       </Table>
