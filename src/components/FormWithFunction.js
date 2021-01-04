@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import fetchAPI from "../services/fetchAPI";
+import React, { useState, useEffect } from 'react';
+import fetchAPI from '../services/fetchAPI';
 
 export default function Form() {
   const [currencies, setCurrencies] = useState([]);
@@ -7,9 +7,9 @@ export default function Form() {
   useEffect(() => {
     async function fetchData() {
       const resp = await fetchAPI();
-      setCurrencies(Object.keys(resp))
+      setCurrencies(Object.keys(resp));
     }
-    fetchData()
+    fetchData();
   }, []);
 
   return (
@@ -17,16 +17,16 @@ export default function Form() {
       <form>
         <div>
           <label htmlFor="disp">despesas</label>
-          <input type="number" data-testid="value-input" id="disp"></input>
+          <input type="number" data-testid="value-input" id="disp" />
         </div>
         <div>
           <label htmlFor="desc">Descrição</label>
-          <input type="text" data-testid="description-input" id="desc"></input>
+          <input type="text" data-testid="description-input" id="desc" />
         </div>
         <div>
           <select name="cars" id="cars" data-testid="currency-input">
             {currencies.map((curr) => (
-              <option key={curr} data-testid={curr}>
+              <option key={ curr } data-testid={ curr }>
                 {curr}
               </option>
             ))}

@@ -1,18 +1,18 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import fetchAPI from "../services/fetchAPI";
-import { actionAPI, actionEdit } from "../actions";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import fetchAPI from '../services/fetchAPI';
+import { actionAPI, actionEdit } from '../actions';
 
 class Form extends Component {
   constructor() {
     super();
     this.state = {
       currencies: [],
-      currency: "USD",
+      currency: 'USD',
       value: 0,
-      description: "any description",
-      method: "Dinheiro",
-      tag: "Alimentação",
+      description: 'any description',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
     this.fetchData = this.fetchData.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -46,7 +46,7 @@ class Form extends Component {
     const { currency, value, description, method, tag } = this.state;
     const id = this.counter;
     editingMode
-      ? actionEdit({ currency, value, description, method, tag, id:editingId })
+      ? actionEdit({ currency, value, description, method, tag, id: editingId })
       : actionAPI({ currency, value, description, method, tag, id });
     this.counter += 1;
   }
@@ -61,39 +61,39 @@ class Form extends Component {
       tag,
     } = this.state;
     const { editingMode } = this.props;
-    console.log(editingMode)
+    console.log(editingMode);
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={ this.handleSubmit }>
           <label htmlFor="disp">despesas</label>
           <input
             name="value"
             type="number"
             data-testid="value-input"
             id="disp"
-            value={value}
-            onChange={this.handleChange}
-          ></input>
+            value={ value }
+            onChange={ this.handleChange }
+          />
 
-          <label htmlFor="desc"></label>
+          <label htmlFor="desc" />
           <input
             name="description"
             type="text"
             data-testid="description-input"
             id="desc"
-            value={description}
-            onChange={this.handleChange}
-          ></input>
+            value={ description }
+            onChange={ this.handleChange }
+          />
 
           <select
             name="currency"
             id="curr"
             data-testid="currency-input"
-            onChange={this.handleChange}
-            value={currency}
+            onChange={ this.handleChange }
+            value={ currency }
           >
             {currencies.map((curr) => (
-              <option key={curr} data-testid={curr} value={curr}>
+              <option key={ curr } data-testid={ curr } value={ curr }>
                 {curr}
               </option>
             ))}
@@ -103,8 +103,8 @@ class Form extends Component {
             name="method"
             id="pay"
             data-testid="method-input"
-            onChange={this.handleChange}
-            value={method}
+            onChange={ this.handleChange }
+            value={ method }
           >
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
@@ -115,8 +115,8 @@ class Form extends Component {
             name="tag"
             id="desp"
             data-testid="tag-input"
-            onChange={this.handleChange}
-            value={tag}
+            onChange={ this.handleChange }
+            value={ tag }
           >
             <option value="Alimentação">Alimentação</option>
             <option value="Lazer">Lazer</option>
@@ -126,7 +126,7 @@ class Form extends Component {
           </select>
 
           <button type="submit">
-            {editingMode ? "Editar despesa" : "Adicionar despesa"}
+            {editingMode ? 'Editar despesa' : 'Adicionar despesa'}
           </button>
         </form>
       </div>
@@ -136,7 +136,7 @@ class Form extends Component {
 
 const mapStateToProps = (store) => ({
   editingMode: store.wallet.editor,
-  editingId:store.wallet.idToEdit,
+  editingId: store.wallet.idToEdit,
 });
 
 const mapDispatchToProps = { actionAPI, actionEdit };
