@@ -1,13 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Table, Button } from 'react-bootstrap';
 import { actionDelete, actionChangeEditState, idBeingEdited } from '../actions';
 
 function TableComp({
   expenses,
-  actionDelete,
-  actionChangeEditState,
-  idBeingEdited,
+  deleteA,
+  edit,
+  editStatus,
 }) {
   //   expensesTable = () => {
   //     expenses.map(({}))
@@ -55,8 +56,8 @@ function TableComp({
                     variant="warning"
                     data-testid="edit-btn"
                     onClick={ () => {
-                      actionChangeEditState();
-                      idBeingEdited(id);
+                      edit();
+                      editStatus(id);
                     } }
                   >
                     Editar
@@ -65,7 +66,7 @@ function TableComp({
                   <Button
                     variant="danger"
                     data-testid="delete-btn"
-                    onClick={ () => actionDelete(id) }
+                    onClick={ () => deleteA(id) }
                   >
                     Remover
                   </Button>
@@ -84,9 +85,15 @@ const mapStateToProps = ({ wallet: { expenses } }) => ({
 });
 
 const mapDispatchToProps = {
-  actionDelete,
-  actionChangeEditState,
-  idBeingEdited,
+  deleteA: actionDelete,
+  edit: actionChangeEditState,
+  editStatus: idBeingEdited,
+};
+TableComp.propTypes = {
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  deleteA: PropTypes.func.isRequired,
+  edit: PropTypes.func.isRequired,
+  editStatus: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableComp);
