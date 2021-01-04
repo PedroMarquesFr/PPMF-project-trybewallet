@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import fetchAPI from '../services/fetchAPI';
 import { actionAPI, actionEdit } from '../actions';
@@ -41,13 +42,15 @@ class Form extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { actionAPI, actionEdit, editingMode, editingId } = this.props;
+    const { ActionAPI, ActionEdit, editingMode, editingId } = this.props;
     console.log(editingId);
     const { currency, value, description, method, tag } = this.state;
     const id = this.counter;
-    editingMode
-      ? actionEdit({ currency, value, description, method, tag, id: editingId })
-      : actionAPI({ currency, value, description, method, tag, id });
+    if (editingMode) {
+      ActionEdit({ currency, value, description, method, tag, id: editingId });
+    } else {
+      ActionAPI({ currency, value, description, method, tag, id });
+    }
     this.counter += 1;
   }
 
@@ -65,25 +68,28 @@ class Form extends Component {
     return (
       <div>
         <form onSubmit={ this.handleSubmit }>
-          <label htmlFor="disp">despesas</label>
-          <input
-            name="value"
-            type="number"
-            data-testid="value-input"
-            id="disp"
-            value={ value }
-            onChange={ this.handleChange }
-          />
+          <label htmlFor="disp">
+            Despesas
+            <input
+              name="value"
+              type="number"
+              data-testid="value-input"
+              id="disp"
+              value={ value }
+              onChange={ this.handleChange }
+            />
+          </label>
 
-          <label htmlFor="desc" />
-          <input
-            name="description"
-            type="text"
-            data-testid="description-input"
-            id="desc"
-            value={ description }
-            onChange={ this.handleChange }
-          />
+          <label htmlFor="desc">
+            <input
+              name="description"
+              type="text"
+              data-testid="description-input"
+              id="desc"
+              value={ description }
+              onChange={ this.handleChange }
+            />
+          </label>
 
           <select
             name="currency"
@@ -139,6 +145,13 @@ const mapStateToProps = (store) => ({
   editingId: store.wallet.idToEdit,
 });
 
-const mapDispatchToProps = { actionAPI, actionEdit };
+const mapDispatchToProps = { ActionAPI: actionAPI, ActionEdit: actionEdit };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
+
+Form.propTypes = {
+  ActionAPI: PropTypes.func.isRequired,
+  ActionEdit: PropTypes.func.isRequired,
+  editingMode: PropTypes.bool.isRequired,
+  editingId: PropTypes.number.isRequired,
+};
