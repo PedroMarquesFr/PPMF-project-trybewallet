@@ -1,16 +1,23 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Navbar } from "react-bootstrap";
-import Form from "../components/Form";
-import TableComp from "../components/Table";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Navbar } from 'react-bootstrap';
+import Form from '../components/Form';
+import TableComp from '../components/Table';
 
 class Wallet extends React.Component {
-  expenseCounter = (expenses) => {
+  constructor() {
+    super();
+    this.expenseCounter = this.expenseCounter.bind(this);
+  }
+
+  expenseCounter(expenses) {
     return expenses.reduce((acc, { value, currency, exchangeRates }) => {
       const multiplier = exchangeRates[currency].ask;
       return acc + value * multiplier;
     }, 0);
-  };
+  }
+
   render() {
     const { email, expenses } = this.props;
     return (
@@ -26,7 +33,7 @@ class Wallet extends React.Component {
           </Navbar>
         </header>
         <Form />
-        <TableComp/>
+        <TableComp />
       </div>
     );
   }
@@ -38,3 +45,8 @@ const mapStateToProps = ({ user: { email }, wallet: { expenses } }) => ({
 });
 
 export default connect(mapStateToProps)(Wallet);
+
+Wallet.propTypes = {
+  expenses: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+};
