@@ -1,23 +1,29 @@
-import React from "react";
-import { connect } from "react-redux";
-import { actionUserLogin } from "../actions";
-import { Redirect } from "react-router-dom";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { actionUserLogin } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      senha: "",
+      email: '',
+      senha: '',
       isValid: false,
       isClicked: false,
     };
+
+    this.isInputValid = this.isInputValid.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  isInputValid = () => {
+  isInputValid() {
     const { email, senha } = this.state;
     const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.+-]+\.com$/;
-    if (regexEmail.test(String(email).toLowerCase()) && senha.length >= 6) {
+    const MIN_CHARACTERS_NUMBER = 6;
+    if (regexEmail.test(String(email).toLowerCase())
+    && senha.length >= MIN_CHARACTERS_NUMBER) {
       return this.setState({
         isValid: true,
       });
@@ -25,42 +31,43 @@ class Login extends React.Component {
     return this.setState({
       isValid: false,
     });
-  };
+  }
 
-  handleChange = ({ target: { name, value } }) => {
+  handleChange({ target: { name, value } }) {
     this.setState(
       {
         [name]: value,
       },
-      this.isInputValid
+      this.isInputValid,
     );
-  };
+  }
 
   render() {
-    const { isValid, isClicked } = this.state;
-    const { actionUserLogin } = this.props;
+    const { isValid, isClicked, email } = this.state;
+    const { ActionUserLogin } = this.props;
     return (
       <div>
         <input
           type="email"
           data-testid="email-input"
           placeholder="email"
-          onChange={this.handleChange}
+          onChange={ this.handleChange }
           name="email"
-        ></input>
+        />
         <input
           type="password"
           data-testid="password-input"
           placeholder="senha"
-          onChange={this.handleChange}
+          onChange={ this.handleChange }
           name="senha"
-        ></input>
+        />
         <button
-          disabled={!isValid}
-          onClick={() => {
-            actionUserLogin(this.state.email);
+          disabled={ !isValid }
+          onClick={ () => {
+            ActionUserLogin(email);
             this.setState({ isClicked: true });
-          }}
+          } }
+          type="button"
         >
           Entrar
         </button>
@@ -70,6 +77,10 @@ class Login extends React.Component {
   }
 }
 
-const mapDispatchToProps = { actionUserLogin };
+const mapDispatchToProps = { ActionUserLogin: actionUserLogin };
 
 export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  ActionUserLogin: PropTypes.func.isRequired,
+};

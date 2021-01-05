@@ -16,12 +16,16 @@ export default function Form() {
     <div>
       <form>
         <div>
-          <label htmlFor="disp">despesas</label>
-          <input type="number" data-testid="value-input" id="disp" />
+          <label htmlFor="disp">
+            despesas
+            <input type="number" data-testid="value-input" id="disp" />
+          </label>
         </div>
         <div>
-          <label htmlFor="desc">Descrição</label>
-          <input type="text" data-testid="description-input" id="desc" />
+          <label htmlFor="desc">
+            Descrição
+            <input type="text" data-testid="description-input" id="desc" />
+          </label>
         </div>
         <div>
           <select name="cars" id="cars" data-testid="currency-input">

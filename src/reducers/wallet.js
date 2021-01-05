@@ -19,6 +19,12 @@ const initialState = {
 export default function reducer(state = initialState, { type, expense }) {
   const { expenses } = state;
   const newExpenses = expenses;
+  let index;
+  let exchangeRates;
+  if (newExpenses.id) {
+    index = expenses.findIndex(({ id }) => id === expense.id);
+    exchangeRates = newExpenses[index].exchangeRates;
+  }
 
   switch (type) {
   case REQUESTING_DATA:
@@ -32,7 +38,6 @@ export default function reducer(state = initialState, { type, expense }) {
   case FAILED_REQUEST:
     return { ...state, error: state.expenses, isFetching: false };
   case DELETE_EXP:
-    const index = expenses.findIndex(({ id }) => id === expense.id);
     newExpenses.splice(index, 1);
     return {
       ...state,
@@ -40,10 +45,7 @@ export default function reducer(state = initialState, { type, expense }) {
       isFetching: false,
     };
   case EDIT_EXP:
-    const indx = expenses.findIndex(({ id }) => id === expense.id);
-    console.log(expense.id);
-    const { exchangeRates } = newExpenses[indx];
-    newExpenses[indx] = { ...expense, exchangeRates };
+    newExpenses[index] = { ...expense, exchangeRates };
 
     return {
       ...state,

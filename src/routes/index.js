@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Login, Wallet } from '../pages';
+import Login from '../pages/Login';
+import Wallet from '../pages/Wallet';
 
 export default function Routes() {
   return (
